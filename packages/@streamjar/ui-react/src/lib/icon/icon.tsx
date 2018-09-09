@@ -1,11 +1,18 @@
 import * as React from 'react';
+import { default as InlineSVG } from 'react-inlinesvg';
 
 export interface IIconProps {
 	icon: string;
+	colour?: string;
 }
 
 export class Icon extends React.PureComponent<IIconProps> {
+	public static defaultProps: Partial<IIconProps> = {
+		colour: '#FFF',
+	};
+
 	public render(): JSX.Element {
+		const { colour } = this.props;
 		let { icon } = this.props;
 
 		let container;
@@ -13,16 +20,15 @@ export class Icon extends React.PureComponent<IIconProps> {
 
 		if (icon.startsWith('jar_')) {
 			family = 'jar';
-			icon = family.replace('jar_', '');
+			icon = icon.replace('jar_', '');
 		}
 
 		if (family === 'material') {
 			container = <i className='material-icons'>{icon}</i>;
 		} else {
-			// todo(LukeT): Implement custom icon support
-			container = <i className='material-icons'>delete</i>;
+			container = <div className='jar-icons'><InlineSVG src={`/assets/icons/${icon}.svg`}></InlineSVG></div> ;
 		}
 
-		return <div className='jar-icon'>{container}</div>;
+		return <div className='jar-icon' style={{ color: colour }}>{container}</div>;
 	}
 }

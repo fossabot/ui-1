@@ -8,6 +8,7 @@ import { AvatarDemo } from './components/avatar-demo';
 import { ButtonDemo } from './components/button-demo';
 import { CardDemo } from './components/card-demo';
 import { CheckboxDemo } from './components/checkbox-demo';
+import { IconDemo } from './components/icon-demo';
 import { SliderDemo } from './components/slider-demo';
 import { ToastsDemo } from './components/toasts-demo';
 
@@ -20,7 +21,7 @@ const PAGES = [
 	{ component: CheckboxDemo, disabled: false, name: 'Checkbox', route: '/checkbox' },
 	{ component: null, disabled: true, name: 'Dialog', route: '/dialog' },
 	{ component: null, disabled: true, name: 'Filter', route: '/filter' },
-	{ component: null, disabled: true, name: 'Icons', route: '/icons' },
+	{ component: IconDemo, disabled: false, name: 'Icons', route: '/icons' },
 	{ component: null, disabled: true, name: 'Inputs', route: '/input' },
 	{ component: null, disabled: true, name: 'Pattern', route: '/pattern' },
 	{ component: null, disabled: true, name: 'Platforms', route: '/platforms' },

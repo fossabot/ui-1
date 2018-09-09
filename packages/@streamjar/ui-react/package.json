@@ -4,7 +4,8 @@
 	"author": "Luke Thompson <luke@streamjar.tv>",
 	"license": "MIT",
 	"scripts": {
-		"demo": "cd demo && webpack-dev-server --config webpack.config.js "
+		"icons": "node ./build/icons",
+		"demo": "npm run icons && cd demo && webpack-dev-server --config webpack.config.js "
 	},
 	"dependencies": {
 		"@material/animation": "^0.39.0",
@@ -19,6 +20,8 @@
 		"prop-types": "^15.6.2",
 		"react": "^16.5.0",
 		"react-dom": "^16.5.0",
+		"react-inline-svg": "^1.1.0",
+		"react-inlinesvg": "^0.8.1",
 		"react-router-component": "^0.39.1",
 		"react-transition-group": "^2.4.0",
 		"sass-loader": "^7.1.0",

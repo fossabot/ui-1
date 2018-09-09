@@ -22,6 +22,10 @@ $breakpoints: (
 		.layout-#{$direction}#{$bp} {
 			display: flex;
 			flex-direction: $direction;
+
+			&.layout-wrap {
+				flex-wrap: wrap;
+			}
 		}
 	}
 

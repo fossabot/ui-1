@@ -5,4 +5,5 @@ export { Checkbox } from './checkbox';
 export { Icon } from './icon';
 export { Ripple } from './ripple';
 export { Slider } from './slider';
+export { Spinner } from './spinner';
 export { toasts } from './toasts/toasts';

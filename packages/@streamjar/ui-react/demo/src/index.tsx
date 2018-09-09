@@ -10,6 +10,7 @@ import { CardDemo } from './components/card-demo';
 import { CheckboxDemo } from './components/checkbox-demo';
 import { IconDemo } from './components/icon-demo';
 import { SliderDemo } from './components/slider-demo';
+import { SpinnerDemo } from './components/spinner-demo';
 import { ToastsDemo } from './components/toasts-demo';
 
 import './styles.scss';
@@ -31,7 +32,7 @@ const PAGES = [
 	{ component: null, disabled: true, name: 'Section', route: '/section' },
 	{ component: null, disabled: true, name: 'Select', route: '/select' },
 	{ component: SliderDemo, disabled: false, name: 'Slider', route: '/slider' },
-	{ component: null, disabled: true, name: 'Spinner', route: '/spinner' },
+	{ component: SpinnerDemo, disabled: false, name: 'Spinner', route: '/spinner' },
 	{ component: null, disabled: true, name: 'Tabs', route: '/tabs' },
 	{ component: ToastsDemo, disabled: false, name: 'Toasts', route: '/toasts' },
 	{ component: null, disabled: true, name: 'Tooltip', route: '/tooltips' },

@@ -8,6 +8,7 @@ import { AvatarDemo } from './components/avatar-demo';
 import { ButtonDemo } from './components/button-demo';
 import { CardDemo } from './components/card-demo';
 import { CheckboxDemo } from './components/checkbox-demo';
+import { ToastsDemo } from './components/toasts-demo';
 
 import './styles.scss';
 
@@ -16,6 +17,7 @@ const PAGES = [
 	{ component: ButtonDemo, name: 'Button', route: '/button' },
 	{ component: CardDemo, name: 'Card', route: '/card' },
 	{ component: CheckboxDemo, name: 'Checkbox', route: '/checkbox' },
+	{ component: ToastsDemo, name: 'Toasts', route: '/toasts' },
 ];
 
 ReactDOM.render(

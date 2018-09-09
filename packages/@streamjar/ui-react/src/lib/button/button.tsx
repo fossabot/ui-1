@@ -11,6 +11,7 @@ export interface IButtonProps {
 	icon?: string;
 	colour?: string;
 	iconRight?: boolean;
+	onClick?: () => void;
 }
 
 export class Button extends React.PureComponent<IButtonProps> {
@@ -18,12 +19,13 @@ export class Button extends React.PureComponent<IButtonProps> {
 		colour: 'primary',
 		disabled: false,
 		iconRight: false,
+		onClick: () => { /* */ },
 		raised: false,
 		round: false,
 	};
 
 	public render() {
-		const { colour, children, disabled, iconRight, icon, raised, round } = this.props;
+		const { colour, children, disabled, iconRight, icon, onClick, raised, round } = this.props;
 
 		const parent = classnames({
 			'jar-button': true,
@@ -45,7 +47,7 @@ export class Button extends React.PureComponent<IButtonProps> {
 		const content = classnames({ 'jar-button__text': true, 'jar-button__text-hasIcon': !!icon });
 
 		return (
-			<button className='jarBtn'>
+			<button className='jarBtn' onClick={this.props.onClick}>
 				<div className={parent} data-colour={colour}>
 					<Ripple />
 

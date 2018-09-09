@@ -18,7 +18,7 @@ export class Avatar extends React.PureComponent<IAvatarParams> {
 		size: 60,
 	};
 
-	public render() {
+	public render(): JSX.Element {
 		const { size, data } = this.props;
 
 		let avatar = '/assets/noavatar.png';

@@ -5,7 +5,7 @@ export interface IIconProps {
 }
 
 export class Icon extends React.PureComponent<IIconProps> {
-	public render() {
+	public render(): JSX.Element {
 		let { icon } = this.props;
 
 		let container;

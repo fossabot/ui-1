@@ -47,7 +47,7 @@ export class Toast extends React.PureComponent<IToastProps, IToastState> {
 		this.clearToast = this.clearToast.bind(this);
 	}
 
-	public componentDidMount() {
+	public componentDidMount(): void {
 		this.props.toasts.on((toast: IToast) => {
 			if (this.state.current) {
 				this.setState((state: IToastState) => ({ toasts: [...state.toasts, toast] }));
@@ -59,7 +59,7 @@ export class Toast extends React.PureComponent<IToastProps, IToastState> {
 		});
 	}
 
-	private showToast(toast: IToast) {
+	public showToast(toast: IToast): void {
 		this.timeout = setTimeout(() => {
 			this.clearToast();
 		}, toast.duration);
@@ -67,7 +67,7 @@ export class Toast extends React.PureComponent<IToastProps, IToastState> {
 		this.setState({ current: toast, isRemovingSoon: false  });
 	}
 
-	private clearToast() {
+	public clearToast(): void {
 		clearTimeout(this.timeout!);
 
 		this.setState({ isRemovingSoon: true });
@@ -87,26 +87,25 @@ export class Toast extends React.PureComponent<IToastProps, IToastState> {
 		}, ANIMATION);
 	}
 
-	public iconFocus() {
+	public iconFocus(): void {
 		this.setState({ focused: true });
-
 	}
 
-	public iconLostFocus() {
+	public iconLostFocus(): void {
 		this.setState({ focused: false });
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		const { current, isRemovingSoon } = this.state;
 
-		const icon = this.state.focused || !current ? 'delete' : ICONS[current.type];
+		const icon: string = this.state.focused || !current ? 'delete' : ICONS[current.type];
 
-		const defaults = {
+		const defaults: React.CSSProperties = {
 			opacity: 0,
 			transition: `all ${ANIMATION}ms cubic-bezier(0.25, 0.8, 0.25, 1)`,
 		};
 
-		const trans: any = {
+		const trans: { [key: string]: React.CSSProperties } = {
 			entered:  { opacity: 1, transform: 'translateY(0%) scale(1)' },
 			entering:  { opacity: 0, transform: 'translateY(25%) scale(.5)' },
 			exiting:  { opacity: 0, transform: 'translateY(25%) scale(.5)' },

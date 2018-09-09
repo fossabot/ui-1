@@ -16,11 +16,11 @@ export class Toaster {
 	public outlet?: any;
 	public listeners: ((toast: IToast) => void)[] = [];
 
-	public on(fn: (toast: IToast) => void) {
+	public on(fn: (toast: IToast) => void): void {
 		this.listeners = [...this.listeners, fn];
 	}
 
-	public show(toast: IToast) {
+	public show(toast: IToast): void {
 		if (!this.outlet) {
 			this.outlet = ReactDOM.render(
 				<Toast toasts={this} />,
@@ -31,15 +31,15 @@ export class Toaster {
 		this.listeners.forEach(listener => listener(toast));
 	}
 
-	public info(message: string, duration = 3000) {
+	public info(message: string, duration = 3000): void {
 		this.show({type: 'info', message, duration});
 	}
 
-	public success(message: string, duration = 2000) {
+	public success(message: string, duration = 2000): void {
 		this.show({type: 'success', message, duration});
 	}
 
-	public error(message: string, duration = 5000) {
+	public error(message: string, duration = 5000): void {
 		this.show({type: 'error', message, duration});
 	}
 }

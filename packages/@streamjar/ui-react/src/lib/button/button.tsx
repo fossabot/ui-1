@@ -24,10 +24,10 @@ export class Button extends React.PureComponent<IButtonProps> {
 		round: false,
 	};
 
-	public render() {
+	public render(): JSX.Element {
 		const { colour, children, disabled, iconRight, icon, onClick, raised, round } = this.props;
 
-		const parent = classnames({
+		const parent: string = classnames({
 			'jar-button': true,
 			'jar-button-disabled': disabled,
 			'jar-button-icon': !!icon && round,
@@ -36,7 +36,7 @@ export class Button extends React.PureComponent<IButtonProps> {
 			'layout-row': true,
 		});
 
-		const child = classnames({
+		const child: string = classnames({
 			'jar-button__content': true,
 			'layout-align-center-center': true,
 			'layout-row': !iconRight,
@@ -44,12 +44,12 @@ export class Button extends React.PureComponent<IButtonProps> {
 			'right': iconRight,
 		});
 
-		const content = classnames({ 'jar-button__text': true, 'jar-button__text-hasIcon': !!icon });
+		const content: string = classnames({ 'jar-button__text': true, 'jar-button__text-hasIcon': !!icon });
 
 		return (
-			<button className='jarBtn' onClick={this.props.onClick}>
+			<button className='jarBtn' onClick={this.props.onClick} disabled={disabled}>
 				<div className={parent} data-colour={colour}>
-					<Ripple />
+					{ !disabled && <Ripple /> }
 
 					<div className={child}>
 						{ icon && (<Icon icon={icon}></Icon>) }

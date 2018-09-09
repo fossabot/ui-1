@@ -58,7 +58,7 @@ export class Ripple extends React.PureComponent<IRippleProps> {
 		}
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		const classes = classnames({
 			'jar-ripple': true,
 			'jar-ripple-bound': !this.props.unbounded,

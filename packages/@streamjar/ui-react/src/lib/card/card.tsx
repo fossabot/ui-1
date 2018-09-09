@@ -7,7 +7,7 @@ export interface ICardContentProps {
 }
 
 export class Card extends React.PureComponent<{}> {
-	public render() {
+	public render(): JSX.Element {
 		return <div className='jar-card layout-column'>
 			{ this.props.children }
 		</div>;
@@ -15,7 +15,7 @@ export class Card extends React.PureComponent<{}> {
 }
 
 export class CardContent extends React.PureComponent<ICardContentProps> {
-	public render() {
+	public render(): JSX.Element {
 		const { children, icon } = this.props;
 
 		return <div className='jar-card__inner layout-row layout-align-start-center layout-column-xs layout-align-center-center-xs'>
@@ -29,7 +29,7 @@ export class CardContent extends React.PureComponent<ICardContentProps> {
 }
 
 export class CardActions extends React.PureComponent {
-	public render() {
+	public render(): JSX.Element {
 		const { children } = this.props;
 
 		return <div className='jar-card-footer layout-row layout-align-end-center layout-column-xs'>

@@ -4,4 +4,5 @@ export { Card, CardContent, CardActions } from './card';
 export { Checkbox } from './checkbox';
 export { Icon } from './icon';
 export { Ripple } from './ripple';
+export { Slider } from './slider';
 export { toasts } from './toasts/toasts';

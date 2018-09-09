@@ -67,10 +67,10 @@ export class Checkbox extends React.PureComponent<ICheckboxProps, ICheckboxState
 		});
 	}
 
-	public render() {
+	public render(): JSX.Element {
 		const { children, colour, disabled, label, noRipple } = this.props;
 
-		const parent = classNames({
+		const parent: string = classNames({
 			disabled: this.props.disabled,
 			'jar-checkbox': true,
 			'jar-checkbox-focused': this.state.focus,
@@ -78,7 +78,7 @@ export class Checkbox extends React.PureComponent<ICheckboxProps, ICheckboxState
 			'layout-row': true,
 		});
 
-		const inner = classNames({
+		const inner: string = classNames({
 			'jar-checkbox-inner': true,
 			'jar-checkbox-inner-checked': this.state.value,
 		});
@@ -93,8 +93,8 @@ export class Checkbox extends React.PureComponent<ICheckboxProps, ICheckboxState
 				onBlur={this.handleBlur}
 				tabIndex={0}>
 
-				<div className={inner} onFocus={this.handleFocus}>
-					{(!noRipple && !disabled) && <div className='rippleContainer' onFocus={this.handleFocus}>
+				<div className={inner}>
+					{(!noRipple && !disabled) && <div className='rippleContainer'>
 						<Ripple unbounded listenTo={() => this.el}/>
 					</div>}
 

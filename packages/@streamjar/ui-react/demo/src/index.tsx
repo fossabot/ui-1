@@ -9,6 +9,7 @@ import { ButtonDemo } from './components/button-demo';
 import { CardDemo } from './components/card-demo';
 import { CheckboxDemo } from './components/checkbox-demo';
 import { IconDemo } from './components/icon-demo';
+import { RadioDemo } from './components/radio-demo';
 import { SliderDemo } from './components/slider-demo';
 import { SpinnerDemo } from './components/spinner-demo';
 import { ToastsDemo } from './components/toasts-demo';
@@ -28,7 +29,7 @@ const PAGES = [
 	{ component: null, disabled: true, name: 'Platforms', route: '/platforms' },
 	{ component: null, disabled: true, name: 'Popup', route: '/popup' },
 	{ component: null, disabled: true, name: 'Menu', route: '/menu' },
-	{ component: null, disabled: true, name: 'Radio', route: '/radio' },
+	{ component: RadioDemo, disabled: false, name: 'Radio', route: '/radio' },
 	{ component: null, disabled: true, name: 'Section', route: '/section' },
 	{ component: null, disabled: true, name: 'Select', route: '/select' },
 	{ component: SliderDemo, disabled: false, name: 'Slider', route: '/slider' },

@@ -8,7 +8,7 @@ export class RadioDemo extends React.Component<{}, { value: number, valueB: numb
 		name: 'Radio',
 	};
 
-	constructor(props) {
+	constructor(props: {}) {
 		super(props);
 
 		this.state = { value: 1, valueB: 2 };
@@ -16,15 +16,15 @@ export class RadioDemo extends React.Component<{}, { value: number, valueB: numb
 		this.onChangeAgain = this.onChangeAgain.bind(this);
 	}
 
-	public onChange(value): void {
+	public onChange(value: string): void {
 		this.setState({
-			value,
+			value: +value,
 		});
 	}
 
-	public onChangeAgain(value): void {
+	public onChangeAgain(value: string): void {
 		this.setState({
-			valueB: value,
+			valueB: +value,
 		});
 	}
 

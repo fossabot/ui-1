@@ -11,7 +11,7 @@ export interface IButtonProps {
 	icon?: string;
 	colour?: string;
 	iconRight?: boolean;
-	onClick?: () => void;
+	onClick?: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
 }
 
 export class Button extends React.PureComponent<IButtonProps> {

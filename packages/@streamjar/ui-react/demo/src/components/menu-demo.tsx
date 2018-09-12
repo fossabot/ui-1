@@ -37,7 +37,7 @@ export class MenuDemo extends React.Component<{}, { anchor: HTMLButtonElement | 
 			<Demo config={this.config}>
 				<Button raised onClick={this.onChange}> Menu </Button>
 
-				<Menu anchor={anchor} onClose={this.onChange}>
+				<Menu width={600} anchor={anchor} onClose={this.onChange}>
 					<p style={{ color: '#FFF', padding: 10, textAlign: 'center' }}> I'm a menu!</p>
 				</Menu>
 			</Demo>

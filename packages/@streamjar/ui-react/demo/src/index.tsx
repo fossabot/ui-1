@@ -14,6 +14,7 @@ import { RadioDemo } from './components/radio-demo';
 import { SliderDemo } from './components/slider-demo';
 import { SpinnerDemo } from './components/spinner-demo';
 import { ToastsDemo } from './components/toasts-demo';
+import { TooltipDemo } from './components/tooltip-demo';
 
 import './styles.scss';
 
@@ -37,7 +38,7 @@ const PAGES = [
 	{ component: SpinnerDemo, disabled: false, name: 'Spinner', route: '/spinner' },
 	{ component: null, disabled: true, name: 'Tabs', route: '/tabs' },
 	{ component: ToastsDemo, disabled: false, name: 'Toasts', route: '/toasts' },
-	{ component: null, disabled: true, name: 'Tooltip', route: '/tooltips' },
+	{ component: TooltipDemo, disabled: false, name: 'Tooltip', route: '/tooltip' },
 ];
 
 ReactDOM.render(

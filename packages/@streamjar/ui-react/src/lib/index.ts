@@ -9,3 +9,4 @@ export { Ripple } from './ripple';
 export { Slider } from './slider';
 export { Spinner } from './spinner';
 export { toasts } from './toasts/toasts';
+export { Tooltip } from './tooltip';

@@ -16,6 +16,7 @@ export interface IMenuState {
 export class Menu extends React.PureComponent<IMenuProps, IMenuState> {
 	public static defaultProps: Partial<IMenuProps> = {
 		onClose: () => { /* */ },
+		width: 165,
 	};
 
 	public menuRef: React.RefObject<HTMLDivElement>;
@@ -63,7 +64,7 @@ export class Menu extends React.PureComponent<IMenuProps, IMenuState> {
 	}
 
 	public render(): JSX.Element | null {
-		const { anchor, children } = this.props;
+		const { anchor, children, width } = this.props;
 		const { hide } = this.state;
 
 		const DEFAULT: React.CSSProperties = {
@@ -79,7 +80,7 @@ export class Menu extends React.PureComponent<IMenuProps, IMenuState> {
 		};
 
 		if (anchor) {
-			return <Anchor el={anchor}>
+			return <Anchor el={anchor} width={width}>
 				<Transition in={!hide} appear={true} unmountOnExit={true} timeout={500} children={state => {
 					return <div ref={this.menuRef} className='jar-menu layout-column' style={{...DEFAULT, ...CLASSES[state]}}>
 						{ children }

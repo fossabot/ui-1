@@ -4,7 +4,9 @@ import { Portal } from './portal';
 import { default as EventListener } from 'react-event-listener';
 
 export interface IAnchorProps {
-	el: HTMLButtonElement;
+	width: number;
+	position: string;
+	el: HTMLElement;
 }
 
 export interface IAnchorState {
@@ -15,10 +17,13 @@ export interface IAnchorState {
 	};
 }
 
-const STATIC_WIDTH = 165;
-const WINDOW_OFFSET = 15;
+const EL_OFFSET = 7;
 
 export class Anchor extends React.PureComponent<IAnchorProps, IAnchorState> {
+	public static defaultProps: Partial<IAnchorProps> = {
+		position: 'bottom',
+	};
+
 	public anchorRef: React.RefObject<HTMLDivElement>;
 
 	constructor(props: IAnchorProps) {
@@ -32,40 +37,82 @@ export class Anchor extends React.PureComponent<IAnchorProps, IAnchorState> {
 		this.setPosition();
 	}
 
-	public calculateWidth(): { width: number, left: number } {
-		let width = STATIC_WIDTH;
+	public calculateWidth(): { width: number, left: number, top: number, height: number} {
+		let itemWidth = this.props.width ? this.props.width : this.anchorRef.current!.getBoundingClientRect().width;
+		let itemHeight = this.anchorRef.current!.getBoundingClientRect().height;
+
+		const anchorTop = this.props.el.getBoundingClientRect().top;
+		const anchorLeft = this.props.el.getBoundingClientRect().left;
+		const anchorWidth = this.props.el.getBoundingClientRect().width;
+		const anchorHeight = this.props.el.getBoundingClientRect().height;
+		const middleAnchorY = anchorTop + (this.props.el.getBoundingClientRect().height / 2);
+		const middleAnchorX = anchorLeft + (this.props.el.getBoundingClientRect().width / 2);
+
 		const windowWidth = document.documentElement.clientWidth;
-		const middleBtn = this.props.el.getBoundingClientRect().left + (this.props.el.offsetWidth / 2);
-		const pos = middleBtn - (width / 2);
+		const windowHeight = document.documentElement.clientHeight;
 
-		let offset = pos;
+		let top = 0;
+		let left = 0;
 
-		if (width >= windowWidth) {
-			width = windowWidth;
-			offset = 0;
-		} else if ((pos + width) >= windowWidth) {
-			offset = windowWidth - WINDOW_OFFSET - width;
-		} else if (pos < 0) {
-			offset = WINDOW_OFFSET;
+		// Calculate positioning
+		if (this.props.position === 'top') {
+			top = anchorTop - itemHeight - EL_OFFSET;
+			left = middleAnchorX - (itemWidth / 2);
+		} else if (this.props.position === 'bottom') {
+			top = anchorTop + anchorHeight + EL_OFFSET;
+			left = middleAnchorX - (itemWidth / 2);
+		} else if (this.props.position === 'right') {
+			top = middleAnchorY - (itemHeight / 2);
+			left = anchorLeft + anchorWidth + EL_OFFSET;
+		} else { // left
+			top = middleAnchorY - (itemHeight / 2);
+			left = anchorLeft - itemWidth - EL_OFFSET;
 		}
 
-		return { width, left: offset };
+		// If item is larger than window, 100%
+		if (itemWidth >= windowWidth) {
+			itemWidth = windowWidth - EL_OFFSET - EL_OFFSET;
+			left = EL_OFFSET;
+		}
+
+		if (itemHeight >= windowHeight) {
+			itemHeight = windowHeight - EL_OFFSET - EL_OFFSET;
+			top = EL_OFFSET;
+		}
+
+		if (left + itemWidth >= windowWidth) {
+			left = windowWidth - EL_OFFSET - itemWidth;
+		}
+
+		if (top + itemHeight >= windowHeight) {
+			top = windowHeight - EL_OFFSET - itemHeight;
+		}
+
+		if (top < 0) {
+			top = EL_OFFSET;
+		}
+
+		if (left < 0) {
+			left = EL_OFFSET;
+		}
+
+		return { width: itemWidth, height: itemHeight, left, top };
 	}
 
 	public setPosition(): void  {
-		const top: number = this.props.el.getBoundingClientRect().top + this.props.el.offsetHeight;
-		const { width, left } = this.calculateWidth();
+		const { width, left, top, height } = this.calculateWidth();
 
 		if (this.anchorRef.current) {
-			this.anchorRef.current.style.left = `${left}px`;
-			this.anchorRef.current.style.top = `${top}px`;
+			this.anchorRef.current.style.left = `${Math.floor(left)}px`;
+			this.anchorRef.current.style.top = `${Math.floor(top)}px`;
 			this.anchorRef.current.style.width = `${width}px`;
+			this.anchorRef.current.style.height = `${height}px`;
 		}
 	}
 
 	public render(): JSX.Element {
 		return (<Portal>
-			<div className='anchor' style={{ position: 'fixed' }} ref={this.anchorRef}>
+			<div className='anchor' style={{ position: 'fixed', overflow: 'hidden' }} ref={this.anchorRef}>
 				{ this.props.children }
 			</div>
 

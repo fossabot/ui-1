@@ -30,7 +30,7 @@ export class Menu extends React.PureComponent<IMenuProps, IMenuState> {
 	}
 
 	public componentWillReceiveProps(prev: IMenuProps, next: IMenuProps): void {
-		if (prev.anchor !== next.anchor) {
+		if (next.anchor !== undefined && prev.anchor !== next.anchor) {
 			this.setState({
 				hide: false,
 			});

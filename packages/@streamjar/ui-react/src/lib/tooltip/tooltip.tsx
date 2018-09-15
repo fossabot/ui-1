@@ -26,7 +26,7 @@ export class Tooltip extends React.PureComponent<ITooltipProps, { anchor: HTMLEl
 	}
 
 	public componentWillReceiveProps(prev: any, next: any): void {
-		if (prev.children !== next.children) {
+		if (next.children !== undefined && prev.children !== next.children) {
 			this.getTarget();
 		}
 	}

@@ -8,6 +8,8 @@ export interface ICheckboxProps {
 	label?: string;
 	noRipple?: boolean;
 	disabled?: boolean;
+	value?: boolean;
+	onChange?: (value: boolean) => void;
 }
 
 export interface ICheckboxState {
@@ -22,6 +24,7 @@ export class Checkbox extends React.PureComponent<ICheckboxProps, ICheckboxState
 		colour: 'primary',
 		disabled: false,
 		noRipple: false,
+		onChange: () => { /* */ },
 	};
 
 	public el: React.RefObject<HTMLDivElement>;
@@ -40,14 +43,22 @@ export class Checkbox extends React.PureComponent<ICheckboxProps, ICheckboxState
 
 		this.state = {
 			focus: false,
-			value: false,
+			value: !!this.props.value,
 		};
 	}
 
 	public handleChange(): void  {
+		(this.props.onChange!)(!this.state.value);
+
 		this.setState((state) => ({
 			value: !state.value,
 		}));
+	}
+
+	public componentDidUpdate(prev: ICheckboxProps) {
+		if (this.props.value !== prev.value) {
+			this.setState({ value: !!this.props.value });
+		}
 	}
 
 	public handleClick(): void {

@@ -37,10 +37,11 @@ export class Tabs extends React.PureComponent<ITabsProps, ITabsState> {
 				value: this.props.value,
 			});
 
-			setTimeout(() => {
-				this.selectTab(this.props.value);
-			});
 		}
+
+		setTimeout(() => {
+			this.selectTab(this.props.value);
+		});
 	}
 
 	public componentWillReceiveProps(prev: ITabsProps, next: ITabsProps): void {
@@ -52,7 +53,7 @@ export class Tabs extends React.PureComponent<ITabsProps, ITabsState> {
 	}
 
 	public selectTab(val: any): void {
-		const target: HTMLDivElement = this.ref!.current!.children[this.valueIndex.get(val)] as any;
+		const target: HTMLDivElement = this.ref!.current!.children[this.valueIndex.get(val) || 0] as any;
 
 		if (this.state.value !== val) {
 			(this.props.onChange!)(val);
@@ -106,7 +107,7 @@ export class Tabs extends React.PureComponent<ITabsProps, ITabsState> {
 
 export interface ITabProps {
 	value: string | boolean | number;
-	onChange: () => void;
+	onChange?: () => void;
 }
 
 export class Tab extends React.PureComponent<ITabProps> {

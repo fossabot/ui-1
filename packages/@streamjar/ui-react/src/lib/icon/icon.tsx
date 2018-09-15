@@ -8,7 +8,7 @@ export interface IIconProps {
 
 export class Icon extends React.PureComponent<IIconProps> {
 	public static defaultProps: Partial<IIconProps> = {
-		colour: '#FFF',
+		// colour: '#FFF',
 	};
 
 	public render(): JSX.Element {

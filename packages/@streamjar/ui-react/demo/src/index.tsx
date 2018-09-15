@@ -11,6 +11,7 @@ import { CheckboxDemo } from './components/checkbox-demo';
 import { IconDemo } from './components/icon-demo';
 import { MenuDemo } from './components/menu-demo';
 import { RadioDemo } from './components/radio-demo';
+import { SectionDemo } from './components/section-demo';
 import { SliderDemo } from './components/slider-demo';
 import { SpinnerDemo } from './components/spinner-demo';
 import { TabsDemo } from './components/tabs-demo';
@@ -33,7 +34,7 @@ const PAGES = [
 	{ component: null, disabled: true, name: 'Popup', route: '/popup' },
 	{ component: MenuDemo, disabled: false, name: 'Menu', route: '/menu' },
 	{ component: RadioDemo, disabled: false, name: 'Radio', route: '/radio' },
-	{ component: null, disabled: true, name: 'Section', route: '/section' },
+	{ component: SectionDemo, disabled: false, name: 'Section', route: '/section' },
 	{ component: null, disabled: true, name: 'Select', route: '/select' },
 	{ component: SliderDemo, disabled: false, name: 'Slider', route: '/slider' },
 	{ component: SpinnerDemo, disabled: false, name: 'Spinner', route: '/spinner' },

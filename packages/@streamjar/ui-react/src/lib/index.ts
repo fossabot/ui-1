@@ -6,6 +6,7 @@ export { Icon } from './icon';
 export { Menu } from './menu';
 export { Radio, RadioGroup } from './radio';
 export { Ripple } from './ripple';
+export { Section } from './section';
 export { Slider } from './slider';
 export { Spinner } from './spinner';
 export { Tab, Tabs } from './tabs';

@@ -2,6 +2,7 @@ export { Avatar } from './avatar';
 export { Button } from './button';
 export { Card, CardContent, CardActions } from './card';
 export { Checkbox } from './checkbox';
+export { Filter, FilterSection } from './filter';
 export { Icon } from './icon';
 export { Menu } from './menu';
 export { Platforms } from './platforms';

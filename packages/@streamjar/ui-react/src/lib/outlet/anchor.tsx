@@ -41,6 +41,8 @@ export class Anchor extends React.PureComponent<IAnchorProps, IAnchorState> {
 	}
 
 	public calculateWidth(): { width: number, left: number, top: number, height: number} {
+		console.log(this.anchorRef.current!.getBoundingClientRect().width);
+
 		let itemWidth = this.props.width ? this.props.width : this.anchorRef.current!.getBoundingClientRect().width;
 		let itemHeight = this.anchorRef.current!.getBoundingClientRect().height;
 
@@ -88,7 +90,7 @@ export class Anchor extends React.PureComponent<IAnchorProps, IAnchorState> {
 		if (this.anchorRef.current) {
 			this.anchorRef.current.style.left = `${Math.floor(left)}px`;
 			this.anchorRef.current.style.top = `${Math.floor(top)}px`;
-			this.anchorRef.current.style.width = `${width}px`;
+			// this.anchorRef.current.style.width = `${width}px`;
 			this.anchorRef.current.style.height = `${height}px`;
 		}
 	}

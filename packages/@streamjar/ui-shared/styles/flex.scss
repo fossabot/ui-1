@@ -10,7 +10,7 @@
 
 $directions: (column, column-reverse, row, row-reverse);
 $alignments: ( center: center, end: flex-end, start: flex-start );
-$layouts: (5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100);
+$layouts: (5, 10, 15, 20, 25, 30, 33, 35, 40, 45, 50, 55, 60, 65, 66, 70, 75, 80, 85, 90, 95, 100);
 $breakpoints: (
 	xs: ( query: (min-width: 0px) and (max-width: 599px) ),
 	sm: ( query: (min-width: 600px) and (max-width: 959px) ),

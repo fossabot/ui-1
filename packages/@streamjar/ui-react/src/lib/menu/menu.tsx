@@ -30,7 +30,7 @@ export class Menu extends React.PureComponent<IMenuProps, IMenuState> {
 	}
 
 	public componentWillReceiveProps(prev: IMenuProps, next: IMenuProps): void {
-		if (next.anchor !== undefined && prev.anchor !== next.anchor) {
+		if (prev.anchor !== next.anchor) {
 			this.setState({
 				hide: false,
 			});
@@ -81,7 +81,7 @@ export class Menu extends React.PureComponent<IMenuProps, IMenuState> {
 
 		if (anchor) {
 			return <Anchor el={anchor} width={width}>
-				<Transition in={!hide} appear={true} unmountOnExit={true} timeout={500} children={state => {
+				<Transition in={!hide} appear={true} timeout={500} children={state => {
 					return <div ref={this.menuRef} className='jar-menu layout-column' style={{...DEFAULT, ...CLASSES[state]}}>
 						{ children }
 					</div>;

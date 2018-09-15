@@ -11,10 +11,41 @@ export class TooltipDemo extends React.Component {
 	public render() {
 		return (
 			<Demo config={this.config}>
-				<Tooltip position='top' message='Lots of tips'><Button>Tooltip Top!</Button></Tooltip>
-				<Tooltip position='left' message='Lots of tips'><Button>Tooltip Left!</Button></Tooltip>
-				<Tooltip position='right' message='Lots of tips'><Button>Tooltip Right!</Button></Tooltip>
-				<Tooltip position='bottom' message='Lots of tips'><Button>Tooltip Bottom</Button></Tooltip>
+				<div className='layout-row'>
+					<div className='flex-20'></div>
+					<div className='flex-20'><Tooltip position='top' pull='start' message='Lots of tips'><Button>top - start</Button></Tooltip></div>
+					<div className='flex-20'><Tooltip position='top' pull='center' message='Lots of tips'><Button>top - center</Button></Tooltip></div>
+					<div className='flex-20'><Tooltip position='top' pull='end' message='Lots of tips'><Button>top - end</Button></Tooltip></div>
+					<div className='flex-20'></div>
+				</div>
+				<div className='layout-row'>
+					<div className='flex-20'><Tooltip position='left' pull='start' message='Lots of tips'><Button>left - start</Button></Tooltip></div>
+					<div className='flex-20'></div>
+					<div className='flex-20'></div>
+					<div className='flex-20'></div>
+					<div className='flex-20'><Tooltip position='right' pull='start' message='Lots of tips'><Button>right - start</Button></Tooltip></div>
+				</div>
+				<div className='layout-row'>
+					<div className='flex-20'><Tooltip position='left' pull='center' message='Lots of tips'><Button>left - center</Button></Tooltip></div>
+					<div className='flex-20'></div>
+					<div className='flex-20'></div>
+					<div className='flex-20'></div>
+					<div className='flex-20'><Tooltip position='right' pull='center' message='Lots of tips'><Button>right - center</Button></Tooltip></div>
+				</div>
+				<div className='layout-row'>
+					<div className='flex-20'><Tooltip position='left' pull='end' message='Lots of tips'><Button>left - end</Button></Tooltip></div>
+					<div className='flex-20'></div>
+					<div className='flex-20'></div>
+					<div className='flex-20'></div>
+					<div className='flex-20'><Tooltip position='right' pull='end' message='Lots of tips'><Button>right - end</Button></Tooltip></div>
+				</div>
+				<div className='layout-row'>
+					<div className='flex-20'></div>
+					<div className='flex-20'><Tooltip position='bottom' pull='start' message='Lots of tips'><Button>bottom - start</Button></Tooltip></div>
+					<div className='flex-20'><Tooltip position='bottom' pull='center' message='Lots of tips'><Button>bottom - center</Button></Tooltip></div>
+					<div className='flex-20'><Tooltip position='bottom' pull='end' message='Lots of tips'><Button>bottom - end</Button></Tooltip></div>
+					<div className='flex-20'></div>
+				</div>
 			</Demo>
 		);
 	}

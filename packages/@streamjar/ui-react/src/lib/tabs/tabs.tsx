@@ -45,7 +45,7 @@ export class Tabs extends React.PureComponent<ITabsProps, ITabsState> {
 	}
 
 	public componentWillReceiveProps(prev: ITabsProps, next: ITabsProps): void {
-		if (next.value !== undefined && prev.value !== next.value) {
+		if (prev.value !== next.value) {
 			this.setState({
 				value: this.props.value,
 			});

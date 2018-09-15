@@ -7,6 +7,7 @@ import { Anchor } from '../outlet/anchor';
 export interface ITooltipProps {
 	position?: string;
 	message: string;
+	pull?: string;
 }
 
 export class Tooltip extends React.PureComponent<ITooltipProps, { anchor: HTMLElement | null, hide: boolean }> {
@@ -26,7 +27,7 @@ export class Tooltip extends React.PureComponent<ITooltipProps, { anchor: HTMLEl
 	}
 
 	public componentWillReceiveProps(prev: any, next: any): void {
-		if (next.children !== undefined && prev.children !== next.children) {
+		if (prev.children !== next.children) {
 			this.getTarget();
 		}
 	}
@@ -75,7 +76,7 @@ export class Tooltip extends React.PureComponent<ITooltipProps, { anchor: HTMLEl
 	}
 
 	public render(): JSX.Element {
-		const { message, position } = this.props;
+		const { message, position, pull } = this.props;
 		const { anchor, hide } = this.state;
 
 		const DEFAULT: React.CSSProperties = {
@@ -91,9 +92,10 @@ export class Tooltip extends React.PureComponent<ITooltipProps, { anchor: HTMLEl
 		};
 
 		const pos = position ? position : 'bottom';
+		const pullTo = pull ? pull : 'center';
 
 		return <React.Fragment>
-			{anchor && <Anchor el={anchor} position={pos}>
+			{anchor && <Anchor el={anchor} position={pos} pull={pullTo} offset={7}>
 				<Transition in={!hide} appear={true} timeout={300} children={state => {
 					return <div className='jar-tooltip' style={{ ...DEFAULT, ...CLASSES[state]} }> {message} </div>;
 				}} />

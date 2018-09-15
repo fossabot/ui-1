@@ -13,6 +13,7 @@ import { MenuDemo } from './components/menu-demo';
 import { RadioDemo } from './components/radio-demo';
 import { SliderDemo } from './components/slider-demo';
 import { SpinnerDemo } from './components/spinner-demo';
+import { TabsDemo } from './components/tabs-demo';
 import { ToastsDemo } from './components/toasts-demo';
 import { TooltipDemo } from './components/tooltip-demo';
 
@@ -36,7 +37,7 @@ const PAGES = [
 	{ component: null, disabled: true, name: 'Select', route: '/select' },
 	{ component: SliderDemo, disabled: false, name: 'Slider', route: '/slider' },
 	{ component: SpinnerDemo, disabled: false, name: 'Spinner', route: '/spinner' },
-	{ component: null, disabled: true, name: 'Tabs', route: '/tabs' },
+	{ component: TabsDemo, disabled: false, name: 'Tabs', route: '/tabs' },
 	{ component: ToastsDemo, disabled: false, name: 'Toasts', route: '/toasts' },
 	{ component: TooltipDemo, disabled: false, name: 'Tooltip', route: '/tooltip' },
 ];

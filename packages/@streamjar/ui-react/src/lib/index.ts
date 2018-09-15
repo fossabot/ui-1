@@ -8,5 +8,6 @@ export { Radio, RadioGroup } from './radio';
 export { Ripple } from './ripple';
 export { Slider } from './slider';
 export { Spinner } from './spinner';
+export { Tab, Tabs } from './tabs';
 export { toasts } from './toasts/toasts';
 export { Tooltip } from './tooltip';

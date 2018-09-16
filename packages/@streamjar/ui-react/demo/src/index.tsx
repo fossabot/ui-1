@@ -15,6 +15,7 @@ import { PlatformsDemo } from './components/platforms-demo';
 import { PopupDemo } from './components/popup-demo';
 import { RadioDemo } from './components/radio-demo';
 import { SectionDemo } from './components/section-demo';
+import { SelectDemo } from './components/select-demo';
 import { SliderDemo } from './components/slider-demo';
 import { SpinnerDemo } from './components/spinner-demo';
 import { TabsDemo } from './components/tabs-demo';
@@ -32,13 +33,12 @@ const PAGES = [
 	{ component: FilterDemo, disabled: false, name: 'Filter', route: '/filter' },
 	{ component: IconDemo, disabled: false, name: 'Icons', route: '/icons' },
 	{ component: null, disabled: true, name: 'Inputs', route: '/input' },
-	{ component: null, disabled: true, name: 'Pattern', route: '/pattern' },
 	{ component: PlatformsDemo, disabled: false, name: 'Platforms', route: '/platforms' },
 	{ component: PopupDemo, disabled: false, name: 'Popup', route: '/popup' },
 	{ component: MenuDemo, disabled: false, name: 'Menu', route: '/menu' },
 	{ component: RadioDemo, disabled: false, name: 'Radio', route: '/radio' },
 	{ component: SectionDemo, disabled: false, name: 'Section', route: '/section' },
-	{ component: null, disabled: true, name: 'Select', route: '/select' },
+	{ component: SelectDemo, disabled: false, name: 'Select', route: '/select' },
 	{ component: SliderDemo, disabled: false, name: 'Slider', route: '/slider' },
 	{ component: SpinnerDemo, disabled: false, name: 'Spinner', route: '/spinner' },
 	{ component: TabsDemo, disabled: false, name: 'Tabs', route: '/tabs' },

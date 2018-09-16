@@ -5,8 +5,9 @@ import { Anchor } from '../outlet/anchor';
 
 export interface IMenuProps {
 	width?: number;
-	anchor: HTMLButtonElement | null;
+	anchor: HTMLElement | null;
 	onClose: () => void;
+	anchorWidth?: boolean;
 }
 
 export interface IMenuState {
@@ -64,7 +65,7 @@ export class Menu extends React.PureComponent<IMenuProps, IMenuState> {
 	}
 
 	public render(): JSX.Element | null {
-		const { anchor, children, width } = this.props;
+		const { anchor, children, width, anchorWidth } = this.props;
 		const { hide } = this.state;
 
 		const DEFAULT: React.CSSProperties = {
@@ -80,7 +81,7 @@ export class Menu extends React.PureComponent<IMenuProps, IMenuState> {
 		};
 
 		if (anchor) {
-			return <Anchor el={anchor} width={width}>
+			return <Anchor el={anchor} width={width} anchorWidth={anchorWidth}>
 				<Transition in={!hide} appear={true} timeout={500} children={state => {
 					return <div ref={this.menuRef} className='jar-menu layout-column' style={{...DEFAULT, ...CLASSES[state]}}>
 						{ children }

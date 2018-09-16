@@ -20,7 +20,7 @@ export class Spinner extends React.PureComponent<ISpinnerProps> {
 			<div className='jar-spinner-outer' style={{ width: `${size}px`, height: `${size}px`}}>
 				<div className='jar-spinner' style={{ width: `${size}px`, height: `${size}px`}}>
 					<svg className='jar-spinner__container' viewBox='25 25 50 50'>
-						<circle className='jar-spinner__path' cx='50' cy='50' r='20' fill='none' stroke-width='3' stroke-miterlimit='10' />
+						<circle className='jar-spinner__path' cx='50' cy='50' r='20' fill='none' strokeWidth='3' strokeMiterlimit='10' />
 					</svg>
 				</div>
 			</div>

@@ -5,7 +5,7 @@ export interface IFormContext {
 	setValue: (key: string, value: string) => void;
 	hasErrored: (key: string) => boolean;
 	getMessage: (key: string) => string;
-	valid: boolean,
+	valid: boolean;
 	inputs: { [key: string]: {
 		error: ValidationError | null;
 		value: string;
@@ -24,6 +24,7 @@ export const FormContext = React.createContext<IFormContext>({
 
 export interface IFormProps {
 	validation?: any;
+	onSubmit: () => void;
 }
 
 export interface IFormState {
@@ -36,13 +37,20 @@ export interface IFormState {
 }
 
 export class Form extends React.PureComponent<IFormProps, IFormState> {
+
+	public static defaultProps: Partial<IFormProps> = {
+		onSubmit: () => { /* */ },
+	};
+
 	constructor(props: IFormProps) {
 		super(props);
 
 		this.setValue = this.setValue.bind(this);
+		this.submit = this.submit.bind(this);
 
 		this.state = {
 			inputs: {},
+			valid: true,
 		};
 	}
 
@@ -73,6 +81,15 @@ export class Form extends React.PureComponent<IFormProps, IFormState> {
 			});
 	}
 
+	public submit(event: React.SyntheticEvent<HTMLFormElement>): void {
+		event.preventDefault();
+		event.stopPropagation();
+
+		if (this.state.valid) {
+			this.props.onSubmit();
+		}
+	}
+
 	public render() {
 		const { children } = this.props;
 		const { inputs, valid } = this.state;
@@ -86,7 +103,9 @@ export class Form extends React.PureComponent<IFormProps, IFormState> {
 		};
 
 		return <FormContext.Provider value={value}>
-			{ children}
+			<form noValidate onSubmit={this.submit}>
+				{ children}
+			</form>
 		</FormContext.Provider>;
 	}
 }

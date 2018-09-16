@@ -1,6 +1,7 @@
 import * as React from 'react';
+import * as yup from 'yup';
 
-import { Button, Input, Textarea } from '../../../src/lib';
+import { Button, Form, Input, Textarea } from '../../../src/lib';
 import { Demo } from '../demo/demo';
 
 export class FormDemo extends React.PureComponent {
@@ -8,8 +9,20 @@ export class FormDemo extends React.PureComponent {
 		name: 'Input / Form',
 	};
 
+	public validation = yup.object().shape({
+		cactus: yup.number().required().min(1).max(5),
+		name: yup.string().required().max(5),
+	});
+
 	public render(): JSX.Element {
 		return <Demo config={this.config}>
+			<Form validation={this.validation}>
+				<Input name='name' type='text' title='Suffix' value='hello' />
+				<Input name='cactus' type='number' title='Suffix' value='1' />
+
+				<Button>Save</Button>
+			</Form>
+
 			<Button raised colour='success'>Upload</Button>
 
 			<Input type='text' title='Text' value='hello' />

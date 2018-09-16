@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import { Icon } from '../icon';
 import { Ripple } from '../ripple';
+import { FormContext, IFormContext } from '../form/form';
 
 export interface IButtonProps {
 	raised?: boolean;
@@ -11,6 +12,7 @@ export interface IButtonProps {
 	icon?: string;
 	colour?: string;
 	iconRight?: boolean;
+	type: string;
 	onClick?: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
 }
 
@@ -22,41 +24,50 @@ export class Button extends React.PureComponent<IButtonProps> {
 		onClick: () => { /* */ },
 		raised: false,
 		round: false,
+		type: 'submit',
 	};
 
 	public render(): JSX.Element {
-		const { colour, children, disabled, iconRight, icon, onClick, raised, round } = this.props;
+		return <FormContext.Consumer children={(state: IFormContext) => {
+			const { colour, children, disabled, iconRight, icon, onClick, raised, round, type } = this.props;
 
-		const parent: string = classnames({
-			'jar-button': true,
-			'jar-button-disabled': disabled,
-			'jar-button-icon': !!icon && round,
-			'jar-button-raised': raised,
-			'layout-align-center-center': true,
-			'layout-row': true,
-		});
+			let isDisabled = disabled;
 
-		const child: string = classnames({
-			'jar-button__content': true,
-			'layout-align-center-center': true,
-			'layout-row': !iconRight,
-			'layout-row-reverse': iconRight,
-			'right': iconRight,
-		});
+			if (!state.valid && type === 'submit') {
+				isDisabled = true;
+			}
 
-		const content: string = classnames({ 'jar-button__text': true, 'jar-button__text-hasIcon': !!icon });
+			const parent: string = classnames({
+				'jar-button': true,
+				'jar-button-disabled': isDisabled,
+				'jar-button-icon': !!icon && round,
+				'jar-button-raised': raised,
+				'layout-align-center-center': true,
+				'layout-row': true,
+			});
 
-		return (
-			<button className='jarBtn' onClick={this.props.onClick} disabled={disabled}>
-				<div className={parent} data-colour={colour}>
-					{ !disabled && <Ripple /> }
+			const child: string = classnames({
+				'jar-button__content': true,
+				'layout-align-center-center': true,
+				'layout-row': !iconRight,
+				'layout-row-reverse': iconRight,
+				'right': iconRight,
+			});
 
-					<div className={child}>
-						{ icon && (<Icon icon={icon}></Icon>) }
-						<div className={content} >{ children }</div>
+			const content: string = classnames({ 'jar-button__text': true, 'jar-button__text-hasIcon': !!icon });
+
+			return (
+				<button type={type} className='jarBtn' onClick={this.props.onClick} disabled={isDisabled}>
+					<div className={parent} data-colour={colour}>
+						{ !isDisabled && <Ripple /> }
+
+						<div className={child}>
+							{ icon && (<Icon icon={icon}></Icon>) }
+							<div className={content} >{ children }</div>
+						</div>
 					</div>
-				</div>
-			</button>
-		);
+				</button>
+			);
+		}} />;
 	}
 }

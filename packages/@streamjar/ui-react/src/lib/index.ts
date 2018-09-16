@@ -3,7 +3,7 @@ export { Button } from './button';
 export { Card, CardContent, CardActions } from './card';
 export { Checkbox } from './checkbox';
 export { Filter, FilterSection } from './filter';
-export { Input, Textarea } from './form';
+export { Input, Textarea, Form } from './form';
 export { Icon } from './icon';
 export { Menu } from './menu';
 export { Platforms } from './platforms';

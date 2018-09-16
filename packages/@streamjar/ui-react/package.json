@@ -17,6 +17,7 @@
 		"@types/react-dom": "^16.0.7",
 		"@types/react-event-listener": "^0.4.7",
 		"@types/react-transition-group": "^2.0.14",
+		"@types/yup": "^0.24.9",
 		"classnames": "^2.2.6",
 		"prop-types": "^15.6.2",
 		"react": "^16.5.0",
@@ -29,7 +30,8 @@
 		"react-transition-group": "^2.4.0",
 		"sass-loader": "^7.1.0",
 		"ts-md5": "^1.2.4",
-		"webpack": "^4.17.2"
+		"webpack": "^4.17.2",
+		"yup": "^0.26.5"
 	},
 	"devDependencies": {
 		"awesome-typescript-loader": "^5.2.1",

@@ -1,11 +1,14 @@
 import * as classnames from 'classnames';
 import * as React from 'react';
+import { Icon } from '../icon';
+import { Tooltip } from '../tooltip';
+import { FormContext, IFormContext } from './form';
 import { InputLabel } from './input-label';
-import { FormEvent } from 'react';
 
 export interface IInputProps {
 	type: string;
 	title: string;
+	name: string;
 	value?: string;
 
 	prefix?: JSX.Element;
@@ -33,10 +36,16 @@ export class Input extends React.PureComponent<IInputProps, IInputState> {
 		onChange: () => { /* */ },
 	};
 
+	public ctx?: IFormContext;
+
 	constructor(props: IInputProps) {
 		super(props);
 
 		this.state = { value: this.props.value || '', focus: false };
+	}
+
+	public componentDidMount() {
+		this.ctx!.setValue(this.props.name, this.props.value!);
 	}
 
 	public focus(): void {
@@ -45,16 +54,18 @@ export class Input extends React.PureComponent<IInputProps, IInputState> {
 		});
 	}
 
-	public blur(): void {
+	public blur(form: IFormContext): void {
 		this.setState({
 			focus: false,
 		});
 	}
 
-	public change(event: React.SyntheticEvent<HTMLInputElement>): void {
+	public change(form: IFormContext, event: React.SyntheticEvent<HTMLInputElement>): void {
 		this.setState({
 			value: event.currentTarget.value,
 		});
+
+		form.setValue(this.props.name, event.currentTarget.value);
 
 		this.props.onChange!(event.currentTarget.value);
 	}
@@ -62,6 +73,7 @@ export class Input extends React.PureComponent<IInputProps, IInputState> {
 	public render() {
 		const {
 			title,
+			name,
 			prefix,
 			suffix,
 			type,
@@ -76,16 +88,7 @@ export class Input extends React.PureComponent<IInputProps, IInputState> {
 			placeholder,
 		} = this.props;
 
-
 		const { focus, value } = this.state;
-
-		const classes = classnames({
-			'jar-input': true,
-			'jar-input-error': false,
-			'jar-input-focus': focus,
-			'layout-align-center-center': true,
-			'layout-row': true,
-		});
 
 		const prefixStyles: React.CSSProperties = {
 			fontWeight: 'bold',
@@ -97,33 +100,51 @@ export class Input extends React.PureComponent<IInputProps, IInputState> {
 			padding: '0px 5px',
 		};
 
-		return <React.Fragment>
-			{ title && <InputLabel>{title}</InputLabel>}
+		return <FormContext.Consumer children={(state: IFormContext) => {
+			this.ctx = state;
 
-			<div className={classes}>
-				{ prefix && <div style={prefixStyles}> {prefix} </div>}
+			const errored = state.hasErrored(name);
 
-				<input
-					className='jar-input__container'
-					style={{ width: '100%' }}
-					type={type}
-					value={value}
-					readOnly={readonly}
-					minLength={minLength}
-					maxLength={maxLength}
-					min={min}
-					max={max}
-					step={step}
-					pattern={pattern}
-					onChange={this.change.bind(this)}
-					placeholder={placeholder}
-					onFocus={this.focus.bind(this)}
-					onBlur={this.blur.bind(this)}
-					tabIndex={0}
-					/>
+			const classes = classnames({
+				'jar-input': true,
+				'jar-input-error': errored,
+				'jar-input-focus': focus,
+				'layout-align-center-center': true,
+				'layout-row': true,
+			});
 
-				{ suffix && <div style={suffixStyles}> {suffix} </div>}
-			</div>
-		</React.Fragment>;
+			return (<React.Fragment>
+				{ title && <InputLabel>{title}</InputLabel>}
+
+				<div className={classes}>
+					{ prefix && <div style={prefixStyles}> {prefix} </div>}
+
+					<input
+						className='jar-input__container'
+						style={{ width: '100%' }}
+						type={type}
+						value={value}
+						readOnly={readonly}
+						minLength={minLength}
+						maxLength={maxLength}
+						min={min}
+						max={max}
+						step={step}
+						pattern={pattern}
+						onChange={this.change.bind(this, state)}
+						placeholder={placeholder}
+						onFocus={this.focus.bind(this)}
+						onBlur={this.blur.bind(this, state)}
+						tabIndex={0}
+						/>
+
+					{ errored && <div className='jar-input__error' style={{ paddingTop: 5 }}>
+						<Tooltip message={state.getMessage(name)} position='top'><Icon icon='error_outline'></Icon></Tooltip>
+					</div>}
+
+					{ suffix && <div style={suffixStyles}> {suffix} </div>}
+				</div>
+			</React.Fragment>);
+		}} />;
 	}
 }

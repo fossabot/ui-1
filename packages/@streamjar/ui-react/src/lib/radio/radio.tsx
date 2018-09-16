@@ -14,6 +14,7 @@ export interface IRadioGroupState {
 	value: string | number;
 }
 
+// tslint:disable-next-line
 const Context = React.createContext<{
 	name: string; value: string | number; onChange: (value: React.SyntheticEvent<HTMLInputElement>) => void
 }>({

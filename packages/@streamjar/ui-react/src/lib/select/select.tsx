@@ -2,11 +2,13 @@ import * as classnames from 'classnames';
 import * as React from 'react';
 
 import { Checkbox } from '../checkbox';
+import { InputLabel } from '../form/input-label';
 import { Icon } from '../icon';
 import { Menu } from '../menu';
 import { Ripple } from '../ripple';
 
 export interface ISelectProps {
+	title?: string;
 	multiple?: boolean;
 	value: string | string[];
 	onChange: (val: string | string[]) => void;
@@ -90,7 +92,7 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
 	}
 
 	public render(): JSX.Element {
-		const { children, multiple } = this.props;
+		const { children, multiple, title } = this.props;
 		const { anchor, value } = this.state;
 
 		const classes = classnames({
@@ -113,6 +115,8 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
 		});
 
 		return <React.Fragment>
+			{ title && <InputLabel>{title}</InputLabel>}
+
 			<div className={classes} onClick={this.toggleDropdown}>
 				{ multiple && <div className='jar-select__items layout-row layout-row-wrap layout-align-start-center flex'>
 					{ this.getValidItems().map(name => <div key={name} className='jar-select__item'> { name } </div>) }
@@ -136,8 +140,8 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
 
 export interface ISelectItemProps {
 	name: string;
-	value: string | number | booelan;
-	values?: string[];
+	value: string | number | boolean;
+	values?: any[];
 	multiple?: boolean;
 	onClick?: () => void;
 }
@@ -146,7 +150,7 @@ export class SelectItem extends React.PureComponent<ISelectItemProps> {
 	public render(): JSX.Element {
 		const { name, multiple, value, values } = this.props;
 
-		const active = values.includes(value);
+		const active = (values || []).includes(value);
 
 		return <div className='jar-select-item' onClick={this.props.onClick}>
 			<Ripple />

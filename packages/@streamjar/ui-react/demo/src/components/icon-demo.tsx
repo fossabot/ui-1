@@ -19,7 +19,7 @@ export class IconDemo extends React.Component {
 				<p> Custom Icons</p>
 
 				<div className='layout-row layout-wrap'>
-					{icons.map(i => <div className='icon layout-column flex-20 layout-align-center-center'>
+					{icons.map(i => <div key={i} className='icon layout-column flex-20 layout-align-center-center'>
 						<div style={{ padding: '10px' }}><Icon icon={`jar_${i}`} /> </div>
 
 						<div>

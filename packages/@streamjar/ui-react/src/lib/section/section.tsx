@@ -22,18 +22,19 @@ export class Section extends React.PureComponent<ISectionProps> {
 			'layout-row-reverse': onlyTabs,
 		});
 
-		return <div className='jar-section'>
-			<div className={className}>
-				<h2 className='jar-section__title'>
-					{ header && <div className='jar-section-header'> { header } </div>}
-				</h2>
-				<span className='flex'></span>
-				{ action && <div className='jar-section-action'> { action } </div>}
+		return (
+			<div className="jar-section">
+				<div className={className}>
+					<h2 className="jar-section__title">
+						{header && <div className="jar-section-header"> {header} </div>}
+					</h2>
+					<span className="flex"></span>
+					{action && <div className="jar-section-action"> {action} </div>}
+				</div>
+				<div className="jar-section__content">
+					{children}
+				</div>
 			</div>
-			<div className='jar-section__content'>
-				{ children }
-				{/* <ng-content select='.jar-section-content'></ng-content> */}
-			</div>
-		</div>;
+		);
 	}
 }

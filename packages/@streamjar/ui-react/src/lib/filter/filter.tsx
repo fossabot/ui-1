@@ -38,12 +38,12 @@ export class Filter extends React.PureComponent<{}, IFilterState> {
 
 	public close(event?: MouseEvent): void {
 		if (event) {
-			if (this.ref.current!.contains(event!.target as any)) {
+			if (this.ref.current!.contains(event.target as any)) {
 				return;
 			}
 
-			event!.stopPropagation();
-			event!.preventDefault();
+			event.stopPropagation();
+			event.preventDefault();
 		}
 
 		document.removeEventListener('click', this.close, { capture: true });
@@ -60,17 +60,23 @@ export class Filter extends React.PureComponent<{}, IFilterState> {
 
 		const width: number = React.Children.count(children) * 202;
 
-		return <React.Fragment>
-			<Button icon='jar_filter' onClick={this.toggleFilter}>Filter </Button>
-
-			{anchor && <Anchor width={width} el={anchor} pull='end'>
-				<div className='jar-filter' ref={this.ref}>
-					<div className='jar-filter__settings layout-row'>
-						{ children }
+		const anchorEl = (
+			<Anchor width={width} el={anchor!} pull="end">
+				<div className="jar-filter" ref={this.ref}>
+					<div className="jar-filter__settings layout-row">
+						{children}
 					</div>
 				</div>
-			</Anchor>}
-		</React.Fragment>;
+			</Anchor>
+		);
+
+		return (
+			<React.Fragment>
+				<Button icon="jar_filter" onClick={this.toggleFilter}>Filter </Button>
+
+				{anchor && anchorEl}
+			</React.Fragment>
+		);
 	}
 }
 
@@ -83,10 +89,10 @@ export class FilterSection extends React.PureComponent<IFilterSectionProps> {
 		const { children, name } = this.props;
 
 		return (
-			<div className='jar-filter-section-container'>
-				<div className='jar-filter-section'>
-					<h3 className='jar-filter-section__header'> <small>{ name }</small> </h3>
-					{ children }
+			<div className="jar-filter-section-container">
+				<div className="jar-filter-section">
+					<h3 className="jar-filter-section__header"> <small>{name}</small> </h3>
+					{children}
 				</div>
 			</div>
 		);

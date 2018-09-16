@@ -8,7 +8,6 @@ export interface IIconProps {
 
 export class Icon extends React.PureComponent<IIconProps> {
 	public static defaultProps: Partial<IIconProps> = {
-		// colour: '#FFF',
 	};
 
 	public render(): JSX.Element {
@@ -24,11 +23,11 @@ export class Icon extends React.PureComponent<IIconProps> {
 		}
 
 		if (family === 'material') {
-			container = <i className='material-icons'>{icon}</i>;
+			container = <i className="material-icons">{icon}</i>;
 		} else {
-			container = <div className='jar-icons'><InlineSVG src={`/assets/icons/${icon}.svg`}></InlineSVG></div> ;
+			container = <div className="jar-icons"><InlineSVG src={`/assets/icons/${icon}.svg`}></InlineSVG></div> ;
 		}
 
-		return <div className='jar-icon' style={{ color: colour }}>{container}</div>;
+		return <div className="jar-icon" style={{ color: colour }}>{container}</div>;
 	}
 }

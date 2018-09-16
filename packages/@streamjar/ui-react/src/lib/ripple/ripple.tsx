@@ -5,14 +5,14 @@ import * as React from 'react';
 import './ripple.scss';
 
 export interface IRippleProps {
-	listenTo?: () => React.RefObject<HTMLDivElement>;
 	unbounded?: boolean;
+	listenTo?(): React.RefObject<HTMLDivElement>;
 }
 
 export class Ripple extends React.PureComponent<IRippleProps> {
 	public static defaultProps: Partial<IRippleProps> = {
 		unbounded: false,
-	};
+};
 
 	public ref: React.RefObject<HTMLDivElement>;
 	public ripple!: MDCRipple;

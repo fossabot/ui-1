@@ -12,6 +12,7 @@ export class FormDemo extends React.PureComponent {
 	public validation = yup.object().shape({
 		cactus: yup.number().required().min(1).max(5),
 		name: yup.string().required().max(5),
+		area: yup.string().required().max(5),
 	});
 
 	public render(): JSX.Element {
@@ -19,6 +20,8 @@ export class FormDemo extends React.PureComponent {
 			<Form validation={this.validation}>
 				<Input name='name' type='text' title='Suffix' value='hello' />
 				<Input name='cactus' type='number' title='Suffix' value='1' />
+
+				<Textarea name='area' title='a'></Textarea>
 
 				<Button>Save</Button>
 			</Form>

@@ -1,5 +1,6 @@
 import * as classnames from 'classnames';
 import * as React from 'react';
+
 import { Icon } from '../icon';
 import { Tooltip } from '../tooltip';
 import { FormContext, IFormContext } from './form';
@@ -23,7 +24,7 @@ export interface IInputProps {
 	readonly?: boolean;
 	placeholder?: string;
 
-	onChange?: (value: string) => void;
+	onChange(value: string): void;
 }
 
 export interface IInputState {
@@ -41,11 +42,17 @@ export class Input extends React.PureComponent<IInputProps, IInputState> {
 	constructor(props: IInputProps) {
 		super(props);
 
+		this.blur = this.blur.bind(this);
+		this.focus = this.focus.bind(this);
+		this.getInput = this.getInput.bind(this);
+
 		this.state = { value: this.props.value || '', focus: false };
 	}
 
-	public componentDidMount() {
-		this.ctx!.setValue(this.props.name, this.props.value!);
+	public componentDidMount(): void {
+		if (this.ctx) {
+			this.ctx.setValue(this.props.name, this.props.value!);
+		}
 	}
 
 	public focus(): void {
@@ -54,7 +61,7 @@ export class Input extends React.PureComponent<IInputProps, IInputState> {
 		});
 	}
 
-	public blur(form: IFormContext): void {
+	public blur(): void {
 		this.setState({
 			focus: false,
 		});
@@ -66,11 +73,14 @@ export class Input extends React.PureComponent<IInputProps, IInputState> {
 		});
 
 		form.setValue(this.props.name, event.currentTarget.value);
-
-		this.props.onChange!(event.currentTarget.value);
+		this.props.onChange(event.currentTarget.value);
 	}
 
-	public render() {
+	public render(): JSX.Element {
+		return <FormContext.Consumer children={this.getInput} />;
+	}
+
+	private getInput(state: IFormContext) {
 		const {
 			title,
 			name,
@@ -100,27 +110,33 @@ export class Input extends React.PureComponent<IInputProps, IInputState> {
 			padding: '0px 5px',
 		};
 
-		return <FormContext.Consumer children={(state: IFormContext) => {
-			this.ctx = state;
+		this.ctx = state;
 
-			const errored = state.hasErrored(name);
+		const errored = state.hasErrored(name);
 
-			const classes = classnames({
-				'jar-input': true,
-				'jar-input-error': errored,
-				'jar-input-focus': focus,
-				'layout-align-center-center': true,
-				'layout-row': true,
-			});
+		const classes = classnames({
+			'jar-input': true,
+			'jar-input-error': errored,
+			'jar-input-focus': focus,
+			'layout-align-center-center': true,
+			'layout-row': true,
+		});
 
-			return (<React.Fragment>
-				{ title && <InputLabel>{title}</InputLabel>}
+		const error =  (
+			<div className="jar-input__error" style={{ paddingTop: 5 }}>
+				<Tooltip message={state.getMessage(name)} position="top"><Icon icon="error_outline"></Icon></Tooltip>
+			</div>
+		);
+
+		return (
+			<React.Fragment>
+				{title && <InputLabel>{title}</InputLabel>}
 
 				<div className={classes}>
-					{ prefix && <div style={prefixStyles}> {prefix} </div>}
+					{prefix && <div style={prefixStyles}> {prefix} </div>}
 
 					<input
-						className='jar-input__container'
+						className="jar-input__container"
 						style={{ width: '100%' }}
 						type={type}
 						value={value}
@@ -131,20 +147,17 @@ export class Input extends React.PureComponent<IInputProps, IInputState> {
 						max={max}
 						step={step}
 						pattern={pattern}
-						onChange={this.change.bind(this, state)}
+						onChange={this.change.bind(this, state)} // tslint:disable-line
 						placeholder={placeholder}
-						onFocus={this.focus.bind(this)}
-						onBlur={this.blur.bind(this, state)}
+						onFocus={this.focus}
+						onBlur={this.blur}
 						tabIndex={0}
 						/>
 
-					{ errored && <div className='jar-input__error' style={{ paddingTop: 5 }}>
-						<Tooltip message={state.getMessage(name)} position='top'><Icon icon='error_outline'></Icon></Tooltip>
-					</div>}
-
-					{ suffix && <div style={suffixStyles}> {suffix} </div>}
+					{errored && error}
+					{suffix && <div style={suffixStyles}> {suffix} </div>}
 				</div>
-			</React.Fragment>);
-		}} />;
+			</React.Fragment>
+		);
 	}
 }

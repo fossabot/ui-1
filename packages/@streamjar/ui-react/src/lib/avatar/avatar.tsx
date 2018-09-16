@@ -34,8 +34,8 @@ export class Avatar extends React.PureComponent<IAvatarParams> {
 		}
 
 		return (
-			<div className='jar-avatar-container' style={{ display: 'inline-flex' }}>
-				<img alt='Avatar' className='jar-avatar' src={avatar} width={`${size}px`} height={`${size}px`} />
+			<div className="jar-avatar-container" style={{ display: 'inline-flex' }}>
+				<img alt="Avatar" className="jar-avatar" src={avatar} width={`${size}px`} height={`${size}px`} />
 			</div>
 		);
 	}

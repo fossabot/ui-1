@@ -38,9 +38,19 @@ export class Slider extends React.PureComponent<ISliderProps, ISliderState> {
 		const { value } = this.state;
 
 		return (
-			<div className='jar-slider'>
+			<div className="jar-slider">
 				<input
-					className='jar-slider__input' type='range' min={min} max={max} step={step} disabled={disabled} value={value} onChange={this.onChange}/>
+					className="jar-slider__input"
+					type="range"
+					aria-valuemin={min}
+					aria-valuemax={max}
+					aria-valuenow={value}
+					min={min}
+					max={max}
+					step={step}
+					disabled={disabled}
+					value={value}
+					onChange={this.onChange} />
 			</div>
 		);
 	}

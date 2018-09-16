@@ -19,7 +19,8 @@
 		height: 100vh;
 		flex: 1 1 100%;
 		max-width: 755%;
-		overflow: scroll;
+		overflow-y: scroll;
+		overflow-x: hidden;
 	}
 
 	.demo {

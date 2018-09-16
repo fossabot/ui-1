@@ -2,29 +2,29 @@ import * as React from 'react';
 import { ValidationError } from 'yup';
 
 export interface IFormContext {
-	setValue: (key: string, value: string) => void;
-	hasErrored: (key: string) => boolean;
-	getMessage: (key: string) => string;
 	valid: boolean;
 	inputs: { [key: string]: {
 		error: ValidationError | null;
 		value: string;
 		dirty: boolean;
-	}};
+	}; };
+	setValue(key: string, value: string): void;
+	hasErrored(key: string): boolean;
+	getMessage(key: string): string;
 }
 
 // tslint:disable-next-line
 export const FormContext = React.createContext<IFormContext>({
 	getMessage: () => '',
-	valid: true,
 	hasErrored: () => false,
 	inputs: {},
 	setValue: () => { /* */ },
+	valid: true,
 });
 
 export interface IFormProps {
 	validation?: any;
-	onSubmit: () => void;
+	onSubmit(): void;
 }
 
 export interface IFormState {
@@ -33,11 +33,10 @@ export interface IFormState {
 		error: ValidationError | null;
 		value: string;
 		dirty: boolean;
-	}};
+	}; };
 }
 
 export class Form extends React.PureComponent<IFormProps, IFormState> {
-
 	public static defaultProps: Partial<IFormProps> = {
 		onSubmit: () => { /* */ },
 	};
@@ -47,6 +46,8 @@ export class Form extends React.PureComponent<IFormProps, IFormState> {
 
 		this.setValue = this.setValue.bind(this);
 		this.submit = this.submit.bind(this);
+		this.hasErrored = this.hasErrored.bind(this);
+		this.getMessage = this.getMessage.bind(this);
 
 		this.state = {
 			inputs: {},
@@ -70,8 +71,8 @@ export class Form extends React.PureComponent<IFormProps, IFormState> {
 
 		this.props.validation.validateAt(key, { [key]: value })
 			.then(() => null)
-			.catch(e => e)
-			.then(e => {
+			.catch((e: ValidationError) => e)
+			.then((e: ValidationError | null) => {
 				this.state.inputs[key].error = e;
 
 				this.setState({
@@ -87,25 +88,47 @@ export class Form extends React.PureComponent<IFormProps, IFormState> {
 
 		if (this.state.valid) {
 			this.props.onSubmit();
+		} else {
+			this.setState(state => {
+				Object.keys(state.inputs).forEach(input => {
+					state.inputs[input].dirty = true;
+				});
+
+				return { inputs: { ...state.inputs } };
+			});
 		}
+	}
+
+	public getMessage(key: string): string {
+		if (this.state.inputs.hasOwnProperty(key) && this.state.inputs[key].error !== null) {
+			return this.state.inputs[key].error!.message;
+		}
+
+		return '';
+	}
+
+	public hasErrored(key: string): boolean {
+		return this.state.inputs.hasOwnProperty(key) && !!this.state.inputs[key].error && !!this.state.inputs[key].dirty;
 	}
 
 	public render() {
 		const { children } = this.props;
 		const { inputs, valid } = this.state;
 
-		const value = {
-			getMessage: (key: string) => this.state.inputs[key] && this.state.inputs[key].error && this.state.inputs[key].error!.message || '',
-			hasErrored: (key: string) => this.state.inputs[key] && !!this.state.inputs[key].error,
+		const value: IFormContext = {
+			getMessage: this.getMessage,
+			hasErrored: this.hasErrored,
 			inputs,
 			setValue: this.setValue,
 			valid,
 		};
 
-		return <FormContext.Provider value={value}>
-			<form noValidate onSubmit={this.submit}>
-				{ children}
-			</form>
-		</FormContext.Provider>;
+		return (
+			<FormContext.Provider value={value}>
+				<form noValidate={true} onSubmit={this.submit}>
+					{children}
+				</form>
+			</FormContext.Provider>
+		);
 	}
 }

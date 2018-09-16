@@ -11,7 +11,7 @@ export interface ISelectProps {
 	title?: string;
 	multiple?: boolean;
 	value: string | string[];
-	onChange: (val: string | string[]) => void;
+	onChange(val: string | string[]): void;
 }
 
 export interface ISelectState {
@@ -63,10 +63,6 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
 		}
 	}
 
-	public getValidItems(): string[] {
-		return this.state.value.map(i => this.values.get(i)).filter(a => !!a);
-	}
-
 	public onClick(value: string): void {
 		this.setState(state => {
 			let newState = [value];
@@ -83,12 +79,6 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
 
 			return { value: newState };
 		});
-	}
-
-	private valueChanged(val: string[]): void {
-		const validVal = val.filter(i => this.values.has(i));
-
-		this.props.onChange(this.props.multiple ? validVal : validVal[0]);
 	}
 
 	public render(): JSX.Element {
@@ -109,32 +99,56 @@ export class Select extends React.PureComponent<ISelectProps, ISelectState> {
 			return React.cloneElement(child, {
 				...child.props,
 				multiple,
-				onClick: () => this.onClick(child.props.value),
+				onClick: () => { this.onClick(child.props.value); },
 				values: value,
 			});
 		});
 
-		return <React.Fragment>
-			{ title && <InputLabel>{title}</InputLabel>}
+		const wrapper = classnames({
+			'layout-row': true,
+			'layout-row-wrap': true,
+			'layout-align-start-center': true,
+			flex: true,
+			'jar-select__items': multiple,
+			'jar-select__option': !multiple,
+		});
 
-			<div className={classes} onClick={this.toggleDropdown}>
-				{ multiple && <div className='jar-select__items layout-row layout-row-wrap layout-align-start-center flex'>
-					{ this.getValidItems().map(name => <div key={name} className='jar-select__item'> { name } </div>) }
-				</div> }
+		return (
+			<React.Fragment>
+				{title && <InputLabel>{title}</InputLabel>}
 
-				{ !multiple && <div className='jar-select__option flex layout-row layout-row-wrap layout-align-start-center'>
-					{ this.getValidItems().map(name => name) }
-				</div>}
+				<div className={classes} onClick={this.toggleDropdown}>
+					<div className={wrapper}>
+						{this.getValidItems()}
+					</div>
 
-				<div className='jar-select__ui layout-column layout-align-center-center'>
-					<Icon icon='arrow_drop_down'></Icon>
+					<div className="jar-select__ui layout-column layout-align-center-center">
+						<Icon icon="arrow_drop_down"></Icon>
+					</div>
 				</div>
-			</div>
 
-			<Menu anchor={anchor} anchorWidth onClose={this.toggleDropdown}>
-				{ childs }
-			</Menu>
-		</React.Fragment>;
+				<Menu anchor={anchor} anchorWidth={true} onClose={this.toggleDropdown}>
+					{childs}
+				</Menu>
+			</React.Fragment>
+		);
+	}
+
+	private getValidItems(): JSX.Element[] {
+		return this.state.value.map(i => this.values.get(i)).filter(a => !!a)
+			.map(i => {
+				if (this.props.multiple) {
+					return <div key={i} className="jar-select__item">{i}</div>;
+				}
+
+				return i;
+			});
+	}
+
+	private valueChanged(val: string[]): void {
+		const validVal = val.filter(i => this.values.has(i));
+
+		this.props.onChange(this.props.multiple ? validVal : validVal[0]);
 	}
 }
 
@@ -143,7 +157,7 @@ export interface ISelectItemProps {
 	value: string | number | boolean;
 	values?: any[];
 	multiple?: boolean;
-	onClick?: () => void;
+	onClick?(): void;
 }
 
 export class SelectItem extends React.PureComponent<ISelectItemProps> {
@@ -152,14 +166,16 @@ export class SelectItem extends React.PureComponent<ISelectItemProps> {
 
 		const active = (values || []).includes(value);
 
-		return <div className='jar-select-item' onClick={this.props.onClick}>
-			<Ripple />
+		return (
+			<div className="jar-select-item" onClick={this.props.onClick}>
+				<Ripple />
 
-			<div className='jar-select-item__container layout-row'>
-				{ multiple && <div className='jar-select-item__check'><Checkbox value={active} noRipple></Checkbox></div> }
+				<div className="jar-select-item__container layout-row">
+					{multiple && <div className="jar-select-item__check"><Checkbox value={active} noRipple={true}></Checkbox></div>}
 
-				<span className='jar-select-item__value'> {name} </span>
+					<span className="jar-select-item__value"> {name} </span>
+				</div>
 			</div>
-		</div>;
+		);
 	}
 }

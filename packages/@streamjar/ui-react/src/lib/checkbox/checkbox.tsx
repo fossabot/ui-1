@@ -9,7 +9,7 @@ export interface ICheckboxProps {
 	noRipple?: boolean;
 	disabled?: boolean;
 	value?: boolean;
-	onChange?: (value: boolean) => void;
+	onChange?(value: boolean): void;
 }
 
 export interface ICheckboxState {
@@ -37,6 +37,7 @@ export class Checkbox extends React.PureComponent<ICheckboxProps, ICheckboxState
 		this.handleClick = this.handleClick.bind(this);
 		this.handleFocus = this.handleFocus.bind(this);
 		this.handleBlur = this.handleBlur.bind(this);
+		this.getElement = this.getElement.bind(this);
 
 		this.input = React.createRef();
 		this.el = React.createRef();
@@ -72,10 +73,15 @@ export class Checkbox extends React.PureComponent<ICheckboxProps, ICheckboxState
 			focus: true,
 		});
 	}
+
 	public handleBlur(): void {
 		this.setState({
 			focus: false,
 		});
+	}
+
+	public getElement(): React.RefObject<HTMLDivElement> {
+		return this.el;
 	}
 
 	public render(): JSX.Element {
@@ -94,6 +100,8 @@ export class Checkbox extends React.PureComponent<ICheckboxProps, ICheckboxState
 			'jar-checkbox-inner-checked': this.state.value,
 		});
 
+		const rippleContainer = <div className="rippleContainer"><Ripple unbounded={true} listenTo={this.getElement} /></div>;
+
 		return (
 			<div
 				ref={this.el}
@@ -105,28 +113,28 @@ export class Checkbox extends React.PureComponent<ICheckboxProps, ICheckboxState
 				tabIndex={0}>
 
 				<div className={inner}>
-					{(!noRipple && !disabled) && <div className='rippleContainer'>
-						<Ripple unbounded listenTo={() => this.el}/>
-					</div>}
+					{(!noRipple && !disabled) && rippleContainer}
 
 					<input
 						ref={this.input}
-						type='checkbox'
+						type="checkbox"
+						aria-checked={this.state.value}
 						style={{ display: 'none' }}
 						checked={this.state.value}
 						tabIndex={-1}
 						onFocus={this.handleFocus}
 						onChange={this.handleChange} />
 
-					<svg version='1.1' className='jar-checkmark' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' xmlSpace='preserve'>
-						<path className='jar-checkmark-path' fill='none' stroke='white' d='M4.1,12.7 9,17.6 20.3,6.3'/>
+					<svg version="1.1" className="jar-checkmark" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 24 24" xmlSpace="preserve">
+						<path className="jar-checkmark-path" fill="none" stroke="white" d="M4.1,12.7 9,17.6 20.3,6.3" />
 					</svg>
 
 				</div>
 
-				<label className='jar-checkbox-label'>
-					{ children }
+				<label className="jar-checkbox-label">
+					{children}
 				</label>
-			</div>);
+			</div>
+			);
 		}
 	}

@@ -28,7 +28,9 @@ export class Toaster {
 			);
 		}
 
-		this.listeners.forEach(listener => listener(toast));
+		this.listeners.forEach(listener => {
+			listener(toast);
+		});
 	}
 
 	public info(message: string, duration = 3000): void {

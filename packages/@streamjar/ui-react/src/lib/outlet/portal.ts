@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+
 import { getOutletRef, getRootOutlet } from './outlet';
 
 export interface IPortalState {

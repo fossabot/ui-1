@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Portal } from './portal';
-
 import { default as EventListener } from 'react-event-listener';
+
+import { Portal } from './portal';
 import { position } from './positioner';
 
 export interface IAnchorProps {
@@ -41,7 +41,7 @@ export class Anchor extends React.PureComponent<IAnchorProps, IAnchorState> {
 		this.setPosition();
 	}
 
-	public calculateWidth(): { width: number, left: number, top: number, height: number} {
+	public calculateWidth(): { width: number; left: number; top: number; height: number } {
 		let itemWidth = this.props.width ? this.props.width : this.anchorRef.current!.getBoundingClientRect().width;
 		let itemHeight = this.anchorRef.current!.getBoundingClientRect().height;
 
@@ -55,7 +55,7 @@ export class Anchor extends React.PureComponent<IAnchorProps, IAnchorState> {
 		let { left, top } = position(this.props.position, this.props.pull, this.props.el.getBoundingClientRect(), {
 			height: itemHeight,
 			width: itemWidth,
-		}, this.props.offset);
+		},                           this.props.offset);
 
 		// If item is larger than window, 100%
 		if (itemWidth >= windowWidth) {
@@ -99,12 +99,14 @@ export class Anchor extends React.PureComponent<IAnchorProps, IAnchorState> {
 	}
 
 	public render(): JSX.Element {
-		return (<Portal>
-			<div className='anchor' style={{ position: 'fixed' }} ref={this.anchorRef}>
-				{ this.props.children }
-			</div>
+		return (
+			<Portal>
+				<div className="anchor" style={{ position: 'fixed' }} ref={this.anchorRef}>
+					{this.props.children}
+				</div>
 
-			<EventListener target={window} onResize={this.setPosition} onScroll={this.setPosition} />
-		</Portal>);
+				<EventListener target={window} onResize={this.setPosition} onScroll={this.setPosition} />
+			</Portal>
+		);
 	}
 }
